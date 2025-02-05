@@ -16,6 +16,24 @@ let timeElapsed = 0;
 let gridRows = 4;
 let gridCols = 4;
 
+// new
+let currentPlayer = 1;
+const playerScores = {
+  1: 0, 
+  2: 0
+};
+// new
+function updatePlayerTurnDisplay() {
+  const turnDisplay = document.getElementById('playerTurn');
+  turnDisplay.textContent = `Player ${currentPlayer}'s turn`;
+}
+
+function updatePlayerScoreDisplay() {
+  document.getElementById('player1Score').textContent = `Player 1: ${playerScores[1]} matches`;
+  document.getElementById('player2Score').textContent = `Player 2: ${playerScores[2]} matches`;
+}
+
+
 // List of animal image filenames
 const animalImages = [
   "cat.png", "dog.png", "elephant.png", "fox.png", "lion.png",
@@ -112,18 +130,36 @@ function checkForMatch() {
   if (card1.dataset.symbol === card2.dataset.symbol) {
     card1.classList.add("matched");
     card2.classList.add("matched");
+
+    // new
+    playerScores[currentPlayer]++;
+    updatePlayerScoreDisplay();
+
+
     flippedCards = [];
     
     // Check if all cards are matched
     if (document.querySelectorAll(".card.matched").length === cards.length) {
       clearInterval(timerInterval);
-      alert(`Game completed in ${moves} moves and ${formatTime(timeElapsed)}!`);
+
+      // new
+      setTimeout(() => {
+        alert(`Game completed in ${moves} moves and ${formatTime(timeElapsed)}!\n' + 
+            Final Scores:
+            Player1: ${playerScores[1]} matches
+            Player2: ${playerScores[2]} matches`);
+      }, 500);
+
     }
   } else {
     setTimeout(() => {
       card1.classList.remove("flipped");
       card2.classList.remove("flipped");
       flippedCards = [];
+
+      // new
+      currentPlayer = currentPlayer === 1 ? 2 : 1;
+      updatePlayerTurnDisplay();
     }, 1000);
   }
 }
@@ -146,6 +182,13 @@ function resetGameInfo() {
   moveCounter.textContent = moves;
   clearInterval(timerInterval); // ✅ Fix: Clear timer on game reset
   timer.textContent = "00:00";
+
+  // new
+  currentPlayer = 1;
+  playerScores[1] = 0;
+  playerScores[2] = 0;
+  updatePlayerTurnDisplay();
+  updatePlayerScoreDisplay();
 }
 
 restartBtn.addEventListener("click", () => {

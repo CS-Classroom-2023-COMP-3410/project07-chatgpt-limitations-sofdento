@@ -173,8 +173,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const fruitOptions = ["🍎", "🍌", "🍇", "🍓", "🍒", "🍍", "🥝", "🍉"];
   const fruitSize = 40;
-  let screenWidth = window.innerWidth;
-  let screenHeight = window.innerHeight;
+  
+  // new
+  const wrapper = document.querySelector('.game-wrapper');
+  let screenWidth = wrapper.clientWidth;
+  let screenHeight = wrapper.clientHeight;
+  // let screenWidth = window.innerWidth;
+  // let screenHeight = window.innerHeight;
 
   function createFruit(x, y) {
       const fruitItem = document.createElement("div");
@@ -192,8 +197,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function generateFruitBorder() {
       fruitBorderContainer.innerHTML = "";
-      screenWidth = window.innerWidth;
-      screenHeight = window.innerHeight;
+
+      // new
+      const wrapper = document.querySelector('.game-wrapper');
+      screenWidth = wrapper.clientWidth;
+      screenHeight = wrapper.clientHeight;
+      // screenWidth = window.innerWidth;
+      // screenHeight = window.innerHeight;
 
       const borderPadding = fruitSize * 1.5; // Ensure space around game area
 
@@ -216,8 +226,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const startButton = document.getElementById("start-button");
 
   startButton.addEventListener("click", () => {
-      gameContainer.style.width = "min(80vw, 600px)"; /* Expand Game */
-      gameContainer.style.top = "calc(50% + 20px)"; /* Move Down */
+      // gameContainer.style.width = "min(80vw, 600px)"; /* Expand Game */
+      // gameContainer.style.top = "calc(50% + 20px)"; /* Move Down */
       gameGrid.style.display = "grid"; /* Show Grid */
       generateFruitBorder(); /* Adjust Border */
   });
